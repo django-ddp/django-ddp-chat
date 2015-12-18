@@ -5,19 +5,13 @@
 <body>
   <h1>Welcome to Meteor!</h1>
 
-  {{> hello}}
   <ul>
-	{{#each rooms}}
-	{{> room}}
-	{{/each}}
+    {{#each rooms}}
+    {{> room}}
+    {{/each}}
 </ul>
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
-</template>
-
 <template name="room">
-  <li><a href="#{{slug}}">{{title}}</a></li>
+  <li>{{slug}}</li>
 </template>
