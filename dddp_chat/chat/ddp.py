@@ -9,9 +9,19 @@ from dddp_chat.chat import models as chat
 
 class Room(Collection):
     model = chat.Room
-    user_rel = [
-        'participant__user',
-    ]
+    def serialize(self, obj, meteor_ds):
+        return {
+            'collection': 'chat.room',
+            'id': obj.aid,
+            'fields': {
+                'slug': obj.slug,
+                'title': obj.title,
+            },
+        }
+
+    #user_rel = [
+    #    'participant__user',
+    #]
 
 
 class User(Collection):
