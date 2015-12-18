@@ -6,40 +6,27 @@
 //                                                                     //
 /////////////////////////////////////////////////////////////////////////
                                                                        //
-auth = {                                                               // 1
-  User: new Mongo.Collection('auth.user')                              // 2
-};                                                                     //
+if (Meteor.isClient) {                                                 // 1
                                                                        //
-chat = {                                                               // 5
-  Room: new Mongo.Collection('chat.room'),                             // 6
-  Participant: new Mongo.Collection('chat.participant'),               // 7
-  Message: new Mongo.Collection('chat.message')                        // 8
-};                                                                     //
+  //User= new Mongo.Collection('auth.user');                           //
                                                                        //
-if (Meteor.isClient) {                                                 // 11
+  Room = new Mongo.Collection('chat.room');                            // 5
+  //Participant= new Mongo.Collection('chat.participant');             //
+  //Message= new Mongo.Collection('chat.message');                     //
+                                                                       //
   // counter starts at 0                                               //
-  Meteor.subscribe('RoomRelated', 'django-ddp');                       // 13
-  Session.setDefault('counter', 0);                                    // 14
+  RoomSub = Meteor.subscribe('PublicRooms');                           // 10
+  Session.setDefault('counter', 0);                                    // 11
                                                                        //
-  Template.hello.helpers({                                             // 16
-    counter: function () {                                             // 17
-      return Session.get('counter');                                   // 18
-    },                                                                 //
-    rooms: function () {                                               // 20
-      return chat.Room.find().fetch();                                 // 21
-    }                                                                  //
-  });                                                                  //
-                                                                       //
-  Template.hello.events({                                              // 25
-    'click button': function () {                                      // 26
-      // increment the counter when button is clicked                  //
-      Session.set('counter', Session.get('counter') + 1);              // 28
+  Template.body.helpers({                                              // 13
+    rooms: function () {                                               // 14
+      return Room.find({});                                            // 15
     }                                                                  //
   });                                                                  //
 }                                                                      //
                                                                        //
-if (Meteor.isServer) {                                                 // 33
-  Meteor.startup(function () {                                         // 34
+if (Meteor.isServer) {                                                 // 20
+  Meteor.startup(function () {                                         // 21
     // code to run on server at startup                                //
   });                                                                  //
 }                                                                      //
