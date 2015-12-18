@@ -1,0 +1,17 @@
+<head>
+  <title>meteor_chat</title>
+</head>
+
+<body>
+  <h1>Welcome to Meteor!</h1>
+
+  <ul>
+    {{#each rooms}}
+    {{> room}}
+    {{/each}}
+</ul>
+</body>
+
+<template name="room">
+  <li>{{slug}}</li>
+</template>
