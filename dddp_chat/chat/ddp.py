@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth import models as auth
-from dddp.api import API, Collection, Publication
+from dddp.api import API, Collection, Publication, api_endpoint
 
 from dddp_chat.chat import models as chat
 
@@ -23,6 +23,12 @@ class Room(Collection):
     #    'participant__user',
     #]
 
+    @api_endpoint
+    def new(self, slug, title, public):
+        self.model.objects.create(
+            slug=slug, title=title, public=public,
+        )
+
 
 class User(Collection):
     model = auth.User
@@ -42,6 +48,12 @@ class Message(Collection):
     ]
 
 
+class PublicRooms(Publication):
+    queries = [
+        chat.Room.objects.filter(public=True),
+    ]
+
+
 class RoomRelated(Publication):
     @staticmethod
     def get_queries(room_slug):
@@ -53,5 +65,5 @@ class RoomRelated(Publication):
 
 API.register([
     Room, User, Participant, Message,
-    RoomRelated,
+    PublicRooms, RoomRelated,
 ])
